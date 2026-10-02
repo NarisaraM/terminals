@@ -200,17 +200,17 @@ footer a { color: #fff; }
 <section class="hero">
   <div class="hero-text">
     <div class="hero-copy">
-      <span class="eyebrow">Thai Ports · Laem Chabang · Bangkok · UNITHAI</span>
-      <h1>Port Website Links</h1>
-      <p class="lede">Websites, Open Gate and vessel schedules, and phone numbers for Laem Chabang Port, Bangkok Port and UNITHAI terminal in one place.</p>
+      <span class="eyebrow">{{eyebrow}}</span>
+      <h1>{{h1}}</h1>
+      <p class="lede">{{lede}}</p>
     </div>
     <div class="hero-side">
     <nav class="lang" aria-label="Language / ภาษา">
-      <a href="index.html" lang="th">TH</a>
-      <a href="en.html" lang="en" aria-current="page">EN</a>
+      <a href="index.html" lang="th"{{cur_th}}>TH</a>
+      <a href="en.html" lang="en"{{cur_en}}>EN</a>
     </nav>
     <div class="clock" aria-live="off">
-      <span class="clock-label">Port time (ICT)</span>
+      <span class="clock-label">{{clock}}</span>
       <span class="clock-time" id="clock-time">--:--:--</span>
       <span class="clock-date" id="clock-date"></span>
     </div>
@@ -277,12 +277,12 @@ footer a { color: #fff; }
 <main class="wrap">
   <section aria-labelledby="map-title" style="display:grid;gap:12px">
     <div class="section-head">
-      <h2 class="section" id="map-title">Port map</h2>
-      <span class="hint">Select a terminal to jump to its contacts</span>
+      <h2 class="section" id="map-title">{{map_title}}</h2>
+      <span class="hint">{{map_hint}}</span>
     </div>
     <div class="harbour">
       <div class="port-group">
-        <span class="port-label">Laem Chabang Port<small>THLCH</small></span>
+        <span class="port-label">{{lcb_name}}<small>THLCH</small></span>
         <div class="piers" style="--n:3">
           <div class="pier"><div class="pier-body">
             <span class="pier-name">BASIN A</span>
@@ -307,12 +307,12 @@ footer a { color: #fff; }
         </div>
       </div>
       <div class="port-group">
-        <span class="port-label">Chao Phraya River<small>THBKK</small></span>
+        <span class="port-label">{{river_name}}<small>THBKK</small></span>
         <div class="piers" style="--n:2">
           <div class="pier"><div class="pier-body">
             <span class="pier-name">KLONG TOEY</span>
             <div class="berths">
-              <a class="berth" href="#bkp" style="--c:var(--c-bkp)"><b>BKP</b>Bangkok Port</a>
+              <a class="berth" href="#bkp" style="--c:var(--c-bkp)"><b>BKP</b>{{bkp_short}}</a>
             </div>
           </div></div>
           <div class="pier"><div class="pier-body">
@@ -328,16 +328,16 @@ footer a { color: #fff; }
 
   <section aria-labelledby="list-title" style="display:grid;gap:18px">
     <div class="section-head">
-      <h2 class="section" id="list-title">Ports and terminals</h2>
+      <h2 class="section" id="list-title">{{list_title}}</h2>
       <span class="count" id="count" aria-live="polite"></span>
     </div>
     <div class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><path d="M12 7v14M5 12H3a9 9 0 0 0 18 0h-2M8 10h8"/></svg>
-      <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search terminals</label>
-      <input id="q" type="search" placeholder="Search by name, berth or phone, e.g. LCIT, B3, UTCT" autocomplete="off">
+      <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">{{search_label}}</label>
+      <input id="q" type="search" placeholder="{{search_ph}}" autocomplete="off">
     </div>
     <div id="groups" style="display:grid;gap:30px"></div>
-    <p class="empty" id="empty" hidden>No terminal matches your search. Try a code such as A0 or UTCT.</p>
+    <p class="empty" id="empty" hidden>{{empty}}</p>
   </section>
 </main>
 
@@ -346,136 +346,16 @@ footer a { color: #fff; }
     <path d="M0 18 Q100 0 200 18 T400 18 T600 18 T800 18 T1000 18 T1200 18 T1400 18 T1600 18 V36 H0 Z" fill="#136aa8"/>
   </svg>
   <div class="inner">
-    <span>Port information: <a href="https://www.port.co.th/" target="_blank" rel="noopener">Port Authority of Thailand</a></span>
-    <span>Phone numbers are each terminal's main line.</span>
+    <span>{{foot_src}} <a href="https://www.port.co.th/" target="_blank" rel="noopener">{{foot_pat}}</a></span>
+    <span>{{foot_note}}</span>
   </div>
 </footer>
 
 <script>
-const LANG = "en";
-const UI = {"website": "Website", "phone": "Phone", "copy": "Copy", "copyPhone": "Copy phone", "openSite": "Open website", "copyLink": "Copy link", "copied": "Copied", "pressCopy": "Press Ctrl+C"};
-const groups = {"lcb": {"name": "Laem Chabang Port", "sub": "Chonburi · THLCH"}, "bkk": {"name": "Bangkok Port and UNITHAI", "sub": "Chao Phraya River · THBKK"}};
-const terminals = [
- {
-  "id": "lcmt",
-  "group": "lcb",
-  "code": "LCMT",
-  "color": "var(--c-lcmt)",
-  "markLabel": "BERTH",
-  "mark": "A0",
-  "name": "LCMT Co., Ltd.",
-  "desc": "LCB1 subsidiary operating berth A0.",
-  "url": "https://www.lcb1.com/Home",
-  "tel": "038-408-600",
-  "links": [
-   {
-    "kind": "gate",
-    "label": "Open Gate",
-    "url": "https://www.lcb1.com/opengate/"
-   }
-  ]
- },
- {
-  "id": "hpt",
-  "group": "lcb",
-  "code": "HPT",
-  "color": "var(--c-hpt)",
-  "markLabel": "BERTH",
-  "mark": "A3",
-  "name": "Hutchison Ports Thailand",
-  "desc": "Multipurpose terminal A3 handling containers and general cargo.",
-  "url": "https://hutchisonports.co.th/terminal-a3/",
-  "tel": "038-408-700",
-  "links": [
-   {
-    "kind": "gate",
-    "label": "Open Gate",
-    "url": "https://online.hutchisonports.co.th/hptpcs/f?p=114:17"
-   }
-  ]
- },
- {
-  "id": "esco",
-  "group": "lcb",
-  "code": "ESCO",
-  "color": "var(--c-esco)",
-  "markLabel": "BERTH",
-  "mark": "B3",
-  "name": "Eastern Sea Laem Chabang Terminal",
-  "desc": "Container terminal B3, open 24 hours.",
-  "url": "https://www.esco.co.th",
-  "tel": "033-005-678",
-  "links": [
-   {
-    "kind": "gate",
-    "label": "Open Gate",
-    "url": "https://service.esco.co.th/BerthSchedule"
-   }
-  ]
- },
- {
-  "id": "lcit",
-  "group": "lcb",
-  "code": "LCIT",
-  "color": "var(--c-lcit)",
-  "markLabel": "BERTH",
-  "mark": "B5 / C3",
-  "name": "Laem Chabang International Terminal",
-  "desc": "Container terminals B5 and C3.",
-  "url": "https://www.lcit.com",
-  "tel": "038-408-200",
-  "links": [
-   {
-    "kind": "gate",
-    "label": "Open Gate",
-    "url": "https://www.lcit.com/checkopengate"
-   }
-  ]
- },
- {
-  "id": "bkp",
-  "group": "bkk",
-  "code": "BKP",
-  "color": "var(--c-bkp)",
-  "markLabel": "PORT",
-  "mark": "KLONG TOEY",
-  "name": "Bangkok Port (Port Authority of Thailand)",
-  "desc": "Klong Toey port on the Chao Phraya River, run by the Port Authority of Thailand.",
-  "url": "https://bkp.port.co.th/cs/internet/bkp/index.html",
-  "tel": "02-269-3537",
-  "links": [
-   {
-    "kind": "schedule",
-    "label": "Vessel schedule",
-    "url": "https://www.port.co.th/port/index.php/vesselentryexit-2/"
-   }
-  ]
- },
- {
-  "id": "utct",
-  "group": "bkk",
-  "code": "UTCT",
-  "color": "var(--c-utct)",
-  "markLabel": "PORT",
-  "mark": "SAMUT PRAKAN",
-  "name": "Unithai Container Terminal (UTCT)",
-  "desc": "UNITHAI container terminal in Samut Prakan, at the mouth of the Chao Phraya River.",
-  "url": "https://www.unithai.com/services/shipping-logistics/container-terminal/",
-  "tel": "02-755-6888",
-  "links": [
-   {
-    "kind": "schedule",
-    "label": "Vessel schedule",
-    "url": "https://utctterminal.unithai.com/publishtrg/shSchedule.aspx"
-   },
-   {
-    "kind": "track",
-    "label": "Container tracking",
-    "url": "https://utctterminal.unithai.com/publishtrg/ctTracking.aspx"
-   }
-  ]
- }
-];
+const LANG = "{{lang}}";
+const UI = {{ui_json}};
+const groups = {{groups_json}};
+const terminals = {{terminals_json}};
 document.documentElement.lang = LANG;
 const fmtTel = tel => LANG === "en" ? "+66 " + tel.slice(1).replace(/-/g, " ") : tel;
 const countText = n => LANG === "en" ? n + (n === 1 ? " terminal" : " terminals") : n + " ท่า";
