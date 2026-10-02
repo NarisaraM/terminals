@@ -61,8 +61,8 @@ h1 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 4.6vw
 .clock-date { font-size: 13px; color: var(--muted); }
 .hero-side { display: grid; gap: 10px; justify-items: end; }
 @media (min-width: 761px) {
-  .hero-text { position: static; padding-right: max(20px, calc(240px - (100vw - 1080px) / 2)); }
-  .hero-side { position: absolute; top: 24px; right: 20px; z-index: 2; }
+  .hero-text { position: static; max-width: none; padding-left: 24px; padding-right: 250px; }
+  .hero-side { position: absolute; top: 24px; right: 24px; z-index: 2; }
 }
 .lang { display: inline-flex; background: rgba(255,255,255,.75); border: 1px solid rgba(255,255,255,.9); border-radius: 999px; padding: 3px; }
 .lang a { font-family: var(--mono); font-weight: 700; font-size: 13px; color: var(--muted); text-decoration: none; padding: 4px 12px; border-radius: 999px; }
