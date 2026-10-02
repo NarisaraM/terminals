@@ -2,6 +2,7 @@
 
 Edit terminal data and wording here, then run:  python build.py
 """
+import base64
 import json
 from pathlib import Path
 
@@ -121,6 +122,9 @@ def build(lang, out):
     })
     for k, v in values.items():
         page = page.replace("{{" + k + "}}", v)
+    # inline the logo so the page also works when opened as a single file
+    logo = base64.b64encode((ROOT / "logo.png").read_bytes()).decode()
+    page = page.replace('src="logo.png"', f'src="data:image/png;base64,{logo}"')
     assert "{{" not in page.replace("{{@", ""), "unfilled placeholder"
     (ROOT / out).write_text(page, encoding="utf-8")
     print("wrote", out)
