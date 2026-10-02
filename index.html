@@ -155,6 +155,8 @@ h2.section { font-family: var(--display); font-size: 20px; margin: 0; }
 .btn svg { width: 16px; height: 16px; }
 .btn-primary { background: var(--c); color: #fff; }
 .btn-primary:hover { filter: brightness(1.08); }
+.btn-gate { background: var(--hazard); color: var(--hazard-dark); }
+.btn-gate:hover { filter: brightness(1.05); }
 .btn-ghost { background: var(--paper); color: var(--ink); border-color: var(--line); }
 .btn-ghost:hover { border-color: var(--c); }
 .card:target { outline: 3px solid var(--hazard); outline-offset: 3px; }
@@ -186,7 +188,7 @@ footer a { color: #fff; }
     <div class="hero-copy">
       <span class="eyebrow">Laem Chabang Port · THLCH · 13°05′N 100°53′E</span>
       <h1>ลิงก์และเบอร์ติดต่อท่าเทียบเรือ ท่าเรือแหลมฉบัง</h1>
-      <p class="lede">รวมเว็บไซต์และเบอร์โทรของผู้ประกอบการท่าไว้ในที่เดียว เลือกท่าจากแผนผังด้านล่าง หรือค้นหาจากชื่อและรหัสท่า</p>
+      <p class="lede">รวมเว็บไซต์ ลิงก์ Open Gate และเบอร์โทรของผู้ประกอบการท่าไว้ในที่เดียว เลือกท่าจากแผนผังด้านล่าง หรือค้นหาจากชื่อและรหัสท่า</p>
     </div>
     <div class="hero-side">
     <nav class="lang" aria-label="Language / ภาษา">
@@ -316,17 +318,18 @@ footer a { color: #fff; }
 <script>
 const terminals = [
   { id: "lcmt", code: "LCMT", berth: "A0", color: "var(--c-lcmt)", name: "LCMT Co., Ltd.",
-    desc: "บริษัทในเครือ LCB1 ดำเนินการท่าเทียบเรือ A0", url: "https://www.lcb1.com/Home", tel: "038-408-600" },
+    desc: "บริษัทในเครือ LCB1 ดำเนินการท่าเทียบเรือ A0", url: "https://www.lcb1.com/Home", gate: "https://www.lcb1.com/opengate/", tel: "038-408-600" },
   { id: "hpt", code: "HPT", berth: "A3", color: "var(--c-hpt)", name: "Hutchison Ports Thailand",
-    desc: "ท่าเทียบเรืออเนกประสงค์ A3 รองรับตู้สินค้าและสินค้าทั่วไป", url: "https://hutchisonports.co.th/terminal-a3/", tel: "038-408-700" },
+    desc: "ท่าเทียบเรืออเนกประสงค์ A3 รองรับตู้สินค้าและสินค้าทั่วไป", url: "https://hutchisonports.co.th/terminal-a3/", gate: "https://online.hutchisonports.co.th/hptpcs/f?p=114:17", tel: "038-408-700" },
   { id: "esco", code: "ESCO", berth: "B3", color: "var(--c-esco)", name: "Eastern Sea Laem Chabang Terminal",
-    desc: "ท่าเทียบเรือตู้สินค้า B3 เปิดบริการ 24 ชั่วโมง", url: "https://www.esco.co.th", tel: "033-005-678" },
+    desc: "ท่าเทียบเรือตู้สินค้า B3 เปิดบริการ 24 ชั่วโมง", url: "https://www.esco.co.th", gate: "https://service.esco.co.th/BerthSchedule", tel: "033-005-678" },
   { id: "lcit", code: "LCIT", berth: "B5 / C3", color: "var(--c-lcit)", name: "Laem Chabang International Terminal",
-    desc: "ท่าเทียบเรือตู้สินค้า B5 และ C3", url: "https://www.lcit.com", tel: "038-408-200" },
+    desc: "ท่าเทียบเรือตู้สินค้า B5 และ C3", url: "https://www.lcit.com", gate: "https://www.lcit.com/checkopengate", tel: "038-408-200" },
 ];
 
 const icon = {
   open: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
+  gate: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 21V8M21 21V8M3 8l18 0M3 12h18M7 8v13M11 8v13M15 8v13M19 8v13"/></svg>',
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h9"/></svg>'
 };
 
@@ -348,6 +351,7 @@ grid.innerHTML = terminals.map(t => `
       </dl>
       <div class="actions">
         <a class="btn btn-primary" href="${t.url}" target="_blank" rel="noopener">${icon.open}เปิดเว็บไซต์</a>
+        <a class="btn btn-gate" href="${t.gate}" target="_blank" rel="noopener" title="ตารางเรือ / Open Gate">${icon.gate}Open Gate</a>
         <button class="btn btn-ghost" type="button" data-copy="${t.url}">${icon.copy}<span>คัดลอกลิงก์</span></button>
       </div>
     </div>
