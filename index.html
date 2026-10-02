@@ -62,21 +62,14 @@ h1 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 4.6vw
 .scene { display: block; width: 100%; height: clamp(170px, 26vw, 280px); margin-top: -10px; }
 
 /* scene animation */
-.sail { animation: sail 48s linear infinite; }
-.bob { animation: bob 3.2s ease-in-out infinite; }
 .wave-a { animation: drift 22s linear infinite; }
 .wave-b { animation: drift 14s linear infinite reverse; }
 .wave-c { animation: drift 9s linear infinite; }
 .cloud { animation: cloud 70s linear infinite; }
 .cloud.slow { animation-duration: 110s; }
-.trolley { animation: trolley 7s ease-in-out infinite; }
-.trolley.t2 { animation-delay: -3.5s; }
 .gull { animation: gull 2.4s ease-in-out infinite; }
-@keyframes sail { 0% { transform: translateX(-360px); opacity: 0 } 6% { opacity: 1 } 88% { opacity: 1 } 100% { transform: translateX(700px); opacity: 0 } }
-@keyframes bob { 0%,100% { transform: translateY(0) rotate(0deg) } 50% { transform: translateY(3px) rotate(.4deg) } }
 @keyframes drift { from { transform: translateX(0) } to { transform: translateX(-1600px) } }
 @keyframes cloud { from { transform: translateX(0) } to { transform: translateX(-1800px) } }
-@keyframes trolley { 0%,100% { transform: translateX(0) } 50% { transform: translateX(-150px) } }
 @keyframes gull { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-5px) } }
 
 /* ---------- Page ---------- */
@@ -192,8 +185,7 @@ footer a { color: #fff; }
   .btn, .berth { transition: filter .15s, border-color .15s, background .15s, color .15s; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .sail, .bob, .wave-a, .wave-b, .wave-c, .cloud, .trolley, .gull { animation: none; }
-  .sail { transform: translateX(320px); }
+  .wave-a, .wave-b, .wave-c, .cloud, .gull { animation: none; }
 }
 </style>
 
@@ -253,12 +245,8 @@ footer a { color: #fff; }
     <g class="wave-a"><path id="waveA" fill="#7cc6f2" opacity=".55"/></g>
 
     <!-- ship -->
-    <g transform="translate(0 214)">
-      <g class="sail">
-        <g class="bob">
-          <g id="ship"></g>
-        </g>
-      </g>
+    <g id="shipPos" transform="translate(-380 214)">
+      <g id="ship"></g>
     </g>
 
     <g class="wave-b"><path id="waveB" fill="#3a9fe0" opacity=".8"/></g>
@@ -613,22 +601,89 @@ for (let col = 0; col < 7; col++) {
   }
 }
 
-// ship-to-shore gantry cranes with moving trolleys
+// ship-to-shore gantry cranes
+// One loop: the ship sails in, two cranes load containers onto it, then it sails out.
+const DOCK_X = 640, START_X = -380, CYCLE = 26, ARRIVE = 5, LEAVE = 20, LIFT = 3.6;
+const PICK_Y = 184, DROP_Y = 214 - 69;                 // hook height at quay / on ship's top tier
+const ease = t => t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t);
+const lerp = (a, b, t) => a + (b - a) * t;
+const slotX = i => 28 + i * 22;                          // ship-local x of a deck slot
+
+const loaded = el("g", {}, ship);
 const cranes = document.getElementById("cranes");
-[{ x: 1060, c: "#ea6a2a" }, { x: 1210, c: "#1f6fc0" }].forEach((cr, i) => {
-  const g = el("g", {}, cranes);
-  el("rect", { x: cr.x, y: 70, width: 8, height: 128, fill: cr.c }, g);
-  el("rect", { x: cr.x + 70, y: 70, width: 8, height: 128, fill: cr.c }, g);
+const craneSpecs = [
+  { x: 1060, boomY: 66, c: "#ea6a2a", reach: 690, slots: [2, 3, 4], start: 6.2 },
+  { x: 1210, boomY: 44, c: "#1f6fc0", reach: 760, slots: [5, 6, 7], start: 8.0 },
+];
+craneSpecs.forEach(cr => {
+  const g = el("g", {}, cranes), b = cr.boomY;
+  el("rect", { x: cr.x, y: b + 4, width: 8, height: 198 - b - 4, fill: cr.c }, g);
+  el("rect", { x: cr.x + 70, y: b + 4, width: 8, height: 198 - b - 4, fill: cr.c }, g);
   el("rect", { x: cr.x, y: 120, width: 78, height: 6, fill: cr.c }, g);
   el("path", { d: `M${cr.x + 4} 126 L${cr.x + 74} 196 M${cr.x + 74} 126 L${cr.x + 4} 196`, stroke: cr.c, "stroke-width": 3 }, g);
-  el("rect", { x: cr.x - 190, y: 66, width: 300, height: 9, fill: cr.c }, g);
-  el("path", { d: `M${cr.x + 39} 30 L${cr.x - 150} 66 M${cr.x + 39} 30 L${cr.x + 100} 66`, stroke: "#2c4a60", "stroke-width": 2 }, g);
-  el("rect", { x: cr.x + 33, y: 26, width: 12, height: 44, fill: cr.c }, g);
-  el("rect", { x: cr.x + 50, y: 48, width: 26, height: 18, fill: "#ffffff", stroke: "#c7d6df" }, g);
-  const t = el("g", { class: "trolley" + (i ? " t2" : "") }, g);
-  el("rect", { x: cr.x - 30, y: 74, width: 22, height: 8, fill: "#2c4a60" }, t);
-  el("line", { x1: cr.x - 22, y1: 82, x2: cr.x - 22, y2: 132, stroke: "#2c4a60", "stroke-width": 1.5 }, t);
-  el("line", { x1: cr.x - 16, y1: 82, x2: cr.x - 16, y2: 132, stroke: "#2c4a60", "stroke-width": 1.5 }, t);
-  el("rect", { x: cr.x - 37, y: 132, width: 36, height: 14, rx: 1, fill: i ? "#1d9b72" : "#f2b705" }, t);
+  el("path", { d: `M${cr.x + 39} ${b - 36} L${cr.reach + 40} ${b} M${cr.x + 39} ${b - 36} L${cr.x + 104} ${b}`, stroke: "#2c4a60", "stroke-width": 2 }, g);
+  el("rect", { x: cr.reach, y: b, width: cr.x + 112 - cr.reach, height: 9, fill: cr.c }, g);
+  el("rect", { x: cr.x + 33, y: b - 40, width: 12, height: 44, fill: cr.c }, g);
+  el("rect", { x: cr.x + 50, y: b - 18, width: 26, height: 18, fill: "#ffffff", stroke: "#c7d6df" }, g);
+  cr.colors = cr.slots.map(() => boxColors[Math.floor(rnd() * boxColors.length)]);
+  cr.placed = cr.slots.map((i, k) => el("rect", { x: slotX(i), y: -69, width: 21, height: 12, rx: 1, fill: cr.colors[k], visibility: "hidden" }, loaded));
+  cr.waiting = el("rect", { y: PICK_Y, width: 21, height: 12, rx: 1, x: cr.x + 28.5 }, g);
+  cr.trolley = el("rect", { y: b + 8, width: 22, height: 8, fill: "#2c4a60" }, g);
+  cr.cableL = el("line", { stroke: "#2c4a60", "stroke-width": 1.5 }, g);
+  cr.cableR = el("line", { stroke: "#2c4a60", "stroke-width": 1.5 }, g);
+  cr.box = el("rect", { width: 21, height: 12, rx: 1 }, g);
+  cr.spreader = el("rect", { width: 25, height: 3, fill: "#2c4a60" }, g);
 });
+
+function craneState(cr, t) {
+  const px = cr.x + 39, up = cr.boomY + 40, local = t - cr.start;
+  const k = Math.floor(local / LIFT);
+  if (local < 0) return { x: px, hook: up, carry: false, waiting: true, placed: 0, k: 0 };
+  if (k >= cr.slots.length) return { x: px, hook: up, carry: false, waiting: false, placed: cr.slots.length, k };
+  const f = (local % LIFT) / LIFT, dx = DOCK_X + slotX(cr.slots[k]) + 10.5;
+  const s = { x: px, hook: up, carry: true, waiting: false, placed: k, k };
+  if (f < .15) { s.hook = lerp(up, PICK_Y, ease(f / .15)); s.carry = false; s.waiting = true; }
+  else if (f < .22) { s.hook = PICK_Y; }
+  else if (f < .37) { s.hook = lerp(PICK_Y, up, ease((f - .22) / .15)); }
+  else if (f < .60) { s.x = lerp(px, dx, ease((f - .37) / .23)); }
+  else if (f < .72) { s.x = dx; s.hook = lerp(up, DROP_Y, ease((f - .60) / .12)); }
+  else {
+    s.carry = false; s.placed = k + 1; s.waiting = k + 1 < cr.slots.length;
+    if (f < .78) { s.x = dx; s.hook = DROP_Y; }
+    else if (f < .88) { s.x = dx; s.hook = lerp(DROP_Y, up, ease((f - .78) / .10)); }
+    else s.x = lerp(dx, px, ease((f - .88) / .12));
+  }
+  return s;
+}
+
+const shipPos = document.getElementById("shipPos");
+function render(ms) {
+  const t = (ms / 1000) % CYCLE;
+  let x = DOCK_X, op = 1;
+  if (t < ARRIVE) { const u = t / ARRIVE; x = lerp(START_X, DOCK_X, 1 - Math.pow(1 - u, 3)); op = Math.min(1, t / .5); }
+  else if (t > LEAVE) { const u = (t - LEAVE) / (CYCLE - LEAVE); x = lerp(DOCK_X, START_X, u * u); op = Math.min(1, (CYCLE - t) / .6); }
+  const bob = Math.sin(ms / 600) * 1.5;
+  shipPos.setAttribute("transform", `translate(${x.toFixed(1)} ${(214 + bob).toFixed(2)})`);
+  shipPos.setAttribute("opacity", op.toFixed(2));
+
+  craneSpecs.forEach(cr => {
+    const s = craneState(cr, t), top = cr.boomY + 16;
+    cr.trolley.setAttribute("x", s.x - 11);
+    for (const [line, off] of [[cr.cableL, -6], [cr.cableR, 6]]) {
+      line.setAttribute("x1", s.x + off); line.setAttribute("x2", s.x + off);
+      line.setAttribute("y1", top); line.setAttribute("y2", s.hook - 3);
+    }
+    cr.spreader.setAttribute("x", s.x - 12.5); cr.spreader.setAttribute("y", s.hook - 3);
+    const color = cr.colors[Math.min(s.k, cr.slots.length - 1)];
+    cr.box.setAttribute("visibility", s.carry ? "visible" : "hidden");
+    cr.box.setAttribute("x", s.x - 10.5); cr.box.setAttribute("y", s.hook); cr.box.setAttribute("fill", color);
+    const nextColor = cr.colors[Math.min(s.placed, cr.slots.length - 1)];
+    cr.waiting.setAttribute("visibility", s.waiting ? "visible" : "hidden");
+    cr.waiting.setAttribute("fill", s.carry ? color : nextColor);
+    cr.placed.forEach((r, i) => r.setAttribute("visibility", i < s.placed ? "visible" : "hidden"));
+  });
+}
+
+if (matchMedia("(prefers-reduced-motion: reduce)").matches) render(14000);
+else (function loop(ms) { render(ms); requestAnimationFrame(loop); })(0);
 </script>
