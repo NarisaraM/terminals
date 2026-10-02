@@ -185,16 +185,16 @@ footer a { color: #fff; }
   <div class="hero-text">
     <div class="hero-copy">
       <span class="eyebrow">Laem Chabang Port · THLCH · 13°05′N 100°53′E</span>
-      <h1>ลิงก์และเบอร์ติดต่อท่าเทียบเรือ ท่าเรือแหลมฉบัง</h1>
-      <p class="lede">รวมเว็บไซต์และเบอร์โทรของผู้ประกอบการท่าไว้ในที่เดียว เลือกท่าจากแผนผังด้านล่าง หรือค้นหาจากชื่อและรหัสท่า</p>
+      <h1>Laem Chabang Port Terminal Websites &amp; Contacts</h1>
+      <p class="lede">Terminal operator websites and phone numbers in one place. Pick a berth on the map below, or search by terminal name or berth code.</p>
     </div>
     <div class="hero-side">
     <nav class="lang" aria-label="Language / ภาษา">
-      <a href="index.html" lang="th" aria-current="page">TH</a>
-      <a href="en.html" lang="en">EN</a>
+      <a href="index.html" lang="th">TH</a>
+      <a href="en.html" lang="en" aria-current="page">EN</a>
     </nav>
     <div class="clock" aria-live="off">
-      <span class="clock-label">เวลาท่าเรือ (ICT)</span>
+      <span class="clock-label">Port time (ICT)</span>
       <span class="clock-time" id="clock-time">--:--:--</span>
       <span class="clock-date" id="clock-date"></span>
     </div>
@@ -261,8 +261,8 @@ footer a { color: #fff; }
 <main class="wrap">
   <section aria-labelledby="map-title" style="display:grid;gap:12px">
     <div class="section-head">
-      <h2 class="section" id="map-title">แผนผังตามแอ่งจอดเรือ</h2>
-      <span class="hint">กดที่ท่าเพื่อไปยังข้อมูลติดต่อ</span>
+      <h2 class="section" id="map-title">Berths by basin</h2>
+      <span class="hint">Select a berth to jump to its contacts</span>
     </div>
     <div class="harbour">
       <div class="pier"><div class="pier-body">
@@ -290,16 +290,16 @@ footer a { color: #fff; }
 
   <section aria-labelledby="list-title" style="display:grid;gap:16px">
     <div class="section-head">
-      <h2 class="section" id="list-title">ท่าเทียบเรือ</h2>
-      <span class="count" id="count" aria-live="polite">4 ท่า</span>
+      <h2 class="section" id="list-title">Terminals</h2>
+      <span class="count" id="count" aria-live="polite">4 terminals</span>
     </div>
     <div class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><path d="M12 7v14M5 12H3a9 9 0 0 0 18 0h-2M8 10h8"/></svg>
-      <label for="q" class="eyebrow" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">ค้นหาท่า</label>
-      <input id="q" type="search" placeholder="ค้นหาชื่อท่า รหัสท่า หรือเบอร์โทร เช่น LCIT, B3" autocomplete="off">
+      <label for="q" class="eyebrow" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search terminals</label>
+      <input id="q" type="search" placeholder="Search by name, berth or phone, e.g. LCIT, B3" autocomplete="off">
     </div>
     <div class="grid" id="grid"></div>
-    <p class="empty" id="empty" hidden>ไม่พบท่าที่ตรงกับคำค้นหา ลองพิมพ์รหัสท่า เช่น A0 หรือ B5</p>
+    <p class="empty" id="empty" hidden>No terminal matches your search. Try a berth code such as A0 or B5.</p>
   </section>
 </main>
 
@@ -308,21 +308,21 @@ footer a { color: #fff; }
     <path d="M0 18 Q100 0 200 18 T400 18 T600 18 T800 18 T1000 18 T1200 18 T1400 18 T1600 18 V36 H0 Z" fill="#136aa8"/>
   </svg>
   <div class="inner">
-    <span>ข้อมูลท่าเทียบเรือทั้งหมด: <a href="https://lcp.port.co.th/" target="_blank" rel="noopener">การท่าเรือแห่งประเทศไทย ท่าเรือแหลมฉบัง</a></span>
-    <span>เบอร์โทรเป็นเบอร์กลางของแต่ละบริษัท</span>
+    <span>All terminal operators: <a href="https://lcp.port.co.th/" target="_blank" rel="noopener">Port Authority of Thailand – Laem Chabang Port</a></span>
+    <span>Phone numbers are each company's main line.</span>
   </div>
 </footer>
 
 <script>
 const terminals = [
   { id: "lcmt", code: "LCMT", berth: "A0", color: "var(--c-lcmt)", name: "LCMT Co., Ltd.",
-    desc: "บริษัทในเครือ LCB1 ดำเนินการท่าเทียบเรือ A0", url: "https://www.lcb1.com/Home", tel: "038-408-600" },
+    desc: "LCB1 subsidiary operating berth A0.", url: "https://www.lcb1.com/Home", tel: "038-408-600" },
   { id: "hpt", code: "HPT", berth: "A3", color: "var(--c-hpt)", name: "Hutchison Ports Thailand",
-    desc: "ท่าเทียบเรืออเนกประสงค์ A3 รองรับตู้สินค้าและสินค้าทั่วไป", url: "https://hutchisonports.co.th/terminal-a3/", tel: "038-408-700" },
+    desc: "Multipurpose terminal A3 handling containers and general cargo.", url: "https://hutchisonports.co.th/terminal-a3/", tel: "038-408-700" },
   { id: "esco", code: "ESCO", berth: "B3", color: "var(--c-esco)", name: "Eastern Sea Laem Chabang Terminal",
-    desc: "ท่าเทียบเรือตู้สินค้า B3 เปิดบริการ 24 ชั่วโมง", url: "https://www.esco.co.th", tel: "033-005-678" },
+    desc: "Container terminal B3, open 24 hours.", url: "https://www.esco.co.th", tel: "033-005-678" },
   { id: "lcit", code: "LCIT", berth: "B5 / C3", color: "var(--c-lcit)", name: "Laem Chabang International Terminal",
-    desc: "ท่าเทียบเรือตู้สินค้า B5 และ C3", url: "https://www.lcit.com", tel: "038-408-200" },
+    desc: "Container terminals B5 and C3.", url: "https://www.lcit.com", tel: "038-408-200" },
 ];
 
 const icon = {
@@ -331,9 +331,12 @@ const icon = {
 };
 
 /* ---------- Cards ---------- */
+document.documentElement.lang = "en";
+const intl = tel => "+66 " + tel.slice(1).replace(/-/g, " ");
+
 const grid = document.getElementById("grid");
 grid.innerHTML = terminals.map(t => `
-  <article class="card" id="${t.id}" style="--c:${t.color}" data-search="${(t.code + " " + t.berth + " " + t.name + " " + t.tel).toLowerCase()}">
+  <article class="card" id="${t.id}" style="--c:${t.color}" data-search="${(t.code + " " + t.berth + " " + t.name + " " + t.tel + " " + intl(t.tel)).toLowerCase()}">
     <div class="box">
       <h3 class="stencil">${t.code}</h3>
       <span class="marking">BERTH<strong>${t.berth}</strong></span>
@@ -342,13 +345,13 @@ grid.innerHTML = terminals.map(t => `
       <p class="fullname">${t.name}</p>
       <p class="desc">${t.desc}</p>
       <dl class="info">
-        <div><dt>เว็บไซต์</dt><dd class="url">${t.url.replace(/^https?:\/\//, "")}</dd></div>
-        <div><dt>โทรศัพท์</dt><dd class="tel"><a href="tel:+66${t.tel.replace(/-/g, "").slice(1)}">${t.tel}</a>
-          <button class="mini" type="button" data-copy="${t.tel}" aria-label="คัดลอกเบอร์ ${t.tel}"><span>คัดลอก</span></button></dd></div>
+        <div><dt>Website</dt><dd class="url">${t.url.replace(/^https?:\/\//, "")}</dd></div>
+        <div><dt>Phone</dt><dd class="tel"><a href="tel:+66${t.tel.replace(/-/g, "").slice(1)}">${intl(t.tel)}</a>
+          <button class="mini" type="button" data-copy="${intl(t.tel)}" aria-label="Copy phone ${intl(t.tel)}"><span>Copy</span></button></dd></div>
       </dl>
       <div class="actions">
-        <a class="btn btn-primary" href="${t.url}" target="_blank" rel="noopener">${icon.open}เปิดเว็บไซต์</a>
-        <button class="btn btn-ghost" type="button" data-copy="${t.url}">${icon.copy}<span>คัดลอกลิงก์</span></button>
+        <a class="btn btn-primary" href="${t.url}" target="_blank" rel="noopener">${icon.open}Open website</a>
+        <button class="btn btn-ghost" type="button" data-copy="${t.url}">${icon.copy}<span>Copy link</span></button>
       </div>
     </div>
   </article>`).join("");
@@ -358,7 +361,7 @@ grid.addEventListener("click", e => {
   if (!b) return;
   const label = b.querySelector("span");
   const orig = label.textContent;
-  const done = () => { label.textContent = "คัดลอกแล้ว"; setTimeout(() => label.textContent = orig, 1600); };
+  const done = () => { label.textContent = "Copied"; setTimeout(() => label.textContent = orig, 1600); };
   if (navigator.clipboard) navigator.clipboard.writeText(b.dataset.copy).then(done).catch(() => fallback(b, label));
   else fallback(b, label);
 });
@@ -366,7 +369,7 @@ function fallback(b, label) {
   const el = b.closest(".tel") ? b.closest(".tel").querySelector("a") : b.closest(".card").querySelector(".url");
   const r = document.createRange(); r.selectNodeContents(el);
   const s = getSelection(); s.removeAllRanges(); s.addRange(r);
-  label.textContent = "กด Ctrl+C";
+  label.textContent = "Press Ctrl+C";
 }
 
 /* ---------- Search ---------- */
@@ -378,13 +381,13 @@ q.addEventListener("input", () => {
     const show = !v || c.dataset.search.includes(v);
     c.hidden = !show; if (show) n++;
   });
-  count.textContent = n + " ท่า";
+  count.textContent = n + (n === 1 ? " terminal" : " terminals");
   empty.hidden = n > 0;
 });
 
 /* ---------- Port clock ---------- */
-const tFmt = new Intl.DateTimeFormat("th-TH", { timeZone: "Asia/Bangkok", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
-const dFmt = new Intl.DateTimeFormat("th-TH", { timeZone: "Asia/Bangkok", weekday: "long", day: "numeric", month: "short", year: "numeric" });
+const tFmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Bangkok", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
+const dFmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Bangkok", weekday: "long", day: "numeric", month: "short", year: "numeric" });
 function tick() {
   const now = new Date();
   document.getElementById("clock-time").textContent = tFmt.format(now);
