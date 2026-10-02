@@ -80,7 +80,7 @@ TERMINALS = [
      "name": {"th": "ท่าเรือกรุงเทพ (การท่าเรือแห่งประเทศไทย)", "en": "Bangkok Port (Port Authority of Thailand)"},
      "desc": {"th": "ท่าเรือคลองเตย ริมแม่น้ำเจ้าพระยา ดำเนินการโดยการท่าเรือแห่งประเทศไทย",
               "en": "Klong Toey port on the Chao Phraya River, run by the Port Authority of Thailand."},
-     "url": "https://bkp.port.co.th/cs/internet/bkp/index.html", "tel": "02-269-3537",
+     "url": "https://bkpiservice.port.co.th", "tel": "02-269-3537",
      "links": [{"kind": "schedule", "label": {"th": "ตารางเรือเข้า-ออก", "en": "Vessel schedule"},
                 "url": "https://www.port.co.th/port/index.php/vesselentryexit-2/"}]},
     {"id": "utct", "group": "bkk", "code": "UTCT", "color": "var(--c-utct)", "markLabel": "PORT", "mark": "SAMUT PRAKAN",
